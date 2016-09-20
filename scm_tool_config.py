@@ -15,7 +15,7 @@ SMTPPORT = "25"
 SMTPPASSWD = ""
 
 def replace_its_bugzilla():
-   cp -f its-bugzilla.jar /my_services/gerrit/plugins/its-bugzilla.jar
+   subprocess.call(['cp','-f','its-bugzilla.jar','/my_services/gerrit/plugins/its-bugzilla.jar'])
 
 def get_ip_address(ifname):
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
