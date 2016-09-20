@@ -75,6 +75,10 @@ def serviceStart(name):
    print "Starting service: " + name
    subprocess.call(['service', name, 'start'])
 
+def daemonReload():
+   print "Reloading daemon configuration..."
+   subprocess.call(['systemctl','daemon-reload'])
+
 def main():
    global NEWIPADRESS
    global SMTPSERVER
@@ -113,6 +117,8 @@ def main():
 
    print "\nReplacing its-bugzilla plugin..."
    replace_its_bugzilla()
+
+   daemonReload()
 
    print "\nStarting services..."
    serviceStart('gerrit')
