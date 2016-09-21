@@ -70,19 +70,19 @@ def fileSetup():
 def serviceStop(name):
    pid = ""
    print "Stopping service: " + name
-   if name == 'gerrit':
-      with open('/my_services/gerrit/logs/gerrit.pid','r') as f:
-         pid = f.read()
-   elif name == 'apache':
-      with open('/var/run/apache2/apache2.pid','r') as f:
-         pid = f.read()
-
    subprocess.call(['service', name, 'stop'])
-   if pid != "": subprocess.call(['kill', '-9', pid])
+
+   if name == 'gerrit':
+      if os.path.isfile('/my_services/gerrit/logs/gerrit.pid'):
+         with open('/my_services/gerrit/logs/gerrit.pid','r') as f:
+            pid = f.read().rstrip('\n')
+         if pid != "": subprocess.call(['kill', '-9', pid])
+   elif name == 'apache2':
+      subprocess.call(['killall', '-9', name])
 
 def serviceStart(name):
    print "Starting service: " + name
-   subprocess.call(['service', name, 'start'])
+   subprocess.call(['service', name, 'restart'])
 
 def daemonReload():
    print "Reloading daemon configuration..."
