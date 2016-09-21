@@ -66,7 +66,9 @@ def fileSetup():
       with open(TARGETFILELIST[position],'w') as f:
          f.write(CHANGEDFILELIST[position])
 
-
+def updateDefaultPage():
+   subprocess.call(['cp','-f','default_index.php','/var/www/html/index.php'])
+   
 def serviceStop(name):
    pid = ""
    print "Stopping service: " + name
@@ -128,6 +130,9 @@ def main():
    replace_its_bugzilla()
 
    daemonReload()
+   
+   # Update apache default home page
+   updateDefaultPage()
 
    print "\nStarting services..."
    serviceStart('apache2')
