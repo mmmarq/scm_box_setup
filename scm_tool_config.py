@@ -130,8 +130,8 @@ def main():
    daemonReload()
 
    print "\nStarting services..."
-   serviceStart('gerrit')
    serviceStart('apache2')
+   serviceStart('gerrit')
    serviceStart('jobqueue.pl')
 
    print "\n"
