@@ -68,8 +68,17 @@ def fileSetup():
 
 
 def serviceStop(name):
+   pid = ""
    print "Stopping service: " + name
+   if name == 'gerrit':
+      with open('/my_services/gerrit/logs/gerrit.pid','r') as f:
+         pid = f.read()
+   elif name == 'apache':
+      with open('/var/run/apache2/apache2.pid','r') as f:
+         pid = f.read()
+
    subprocess.call(['service', name, 'stop'])
+   if pid != "": subprocess.call(['kill', '-9', pid])
 
 def serviceStart(name):
    print "Starting service: " + name
