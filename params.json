@@ -48,7 +48,7 @@
    "last_visit_keep_days" : "10",
    "letsubmitterchoosemilestone" : "1",
    "letsubmitterchoosepriority" : "1",
-   "mail_delivery_method" : "SMTP",
+   "mail_delivery_method" : "SMTPTYPE",
    "mailfrom" : "bugzilla-daemon",
    "maintainer" : "admin@raspberry.pi",
    "makeproductgroups" : "0",

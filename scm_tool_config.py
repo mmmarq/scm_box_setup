@@ -58,6 +58,13 @@ def fileSetup():
       temp = temp.replace('SMTPUSER',SMTPUSER)
       temp = temp.replace('SMTPPORT',SMTPPORT)
       temp = temp.replace('SMTPPASSWD',SMTPPASSWD)
+      if SMTPSERVER == '':
+         temp = temp.replace('SMTPENABLE','false')
+         temp = temp.replace('SMTPTYPE','None')
+      else:
+         temp = temp.replace('SMTPENABLE','true')
+         temp = temp.replace('SMTPTYPE','SMTP')
+
       CHANGEDFILELIST.append(temp)
 
    # Replace configuration file content
@@ -105,6 +112,7 @@ def main():
    if temp != "": NEWIPADRESS = temp
    print "\nAll services will be available under IP: " + NEWIPADRESS + "\n"
 
+   print "IMPORTANT - Leave next questions blank if you dont want to enable Bugzilla/Gerrit mail notification\n"
    # Request to user SMTP server data
    temp = raw_input('Please enter your SMTP (e-mail) server address: ')
    if temp != "": SMTPSERVER = temp
