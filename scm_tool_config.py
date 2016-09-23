@@ -111,7 +111,7 @@ def main():
    if temp != "": NEWIPADRESS = temp
    print "\nAll services will be available under IP: " + NEWIPADRESS + "\n"
 
-   print "IMPORTANT - Leave next questions blank if you dont want to enable Bugzilla/Gerrit mail notification\n"
+   print "IMPORTANT - Leave next questions blank if you want to disable Bugzilla/Gerrit mail notification\n"
    # Request to user SMTP server data
    temp = raw_input('Please enter your SMTP (e-mail) server address: ')
    if temp != "": SMTPSERVER = temp
