@@ -32,7 +32,7 @@ def fileSetup():
    global SMTPPORT
    global SMTPPASSWD
 
-   SOURCEFILELIST = ['gerrit.config','index.php','params.json','secure.config']
+   SOURCEFILELIST = ['gerrit.config','gerrit_index.php','params.json','secure.config']
    TARGETFILELIST = ['/my_services/gerrit/etc/gerrit.config','/var/www/html/gerrit/index.php','/my_services/bugzilla/data/params.json','/my_services/gerrit/etc/secure.config']
    CHANGEDFILELIST = []
 
@@ -74,7 +74,7 @@ def fileSetup():
          f.write(CHANGEDFILELIST[position])
 
 def updateDefaultPage():
-   subprocess.call(['cp','-f','default_index.php','/var/www/html/index.php'])
+   subprocess.call(['cp','-f','apache_index.php','/var/www/html/index.php'])
    
 def serviceStop(name):
    pid = ""
