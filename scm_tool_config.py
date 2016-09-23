@@ -90,7 +90,7 @@ def serviceStop(name):
       subprocess.call(['killall', '-9', name])
 
 def systemRestart():
-   subprocess.call(['shutdown', '-h', 'now'])
+   subprocess.call(['shutdown', '-r', 'now'])
 
 def daemonReload():
    print "Reloading daemon configuration..."
