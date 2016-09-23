@@ -89,9 +89,8 @@ def serviceStop(name):
    elif name == 'apache2':
       subprocess.call(['killall', '-9', name])
 
-def serviceStart(name):
-   print "Starting service: " + name
-   subprocess.call(['service', name, 'restart'])
+def systemRestart():
+   subprocess.call(['shutdown', '-h', 'now'])
 
 def daemonReload():
    print "Reloading daemon configuration..."
@@ -137,15 +136,14 @@ def main():
    print "\nReplacing its-bugzilla plugin..."
    replace_its_bugzilla()
 
+   # Force daemon configuration file reload
    daemonReload()
    
    # Update apache default home page
    updateDefaultPage()
 
-   print "\nStarting services..."
-   serviceStart('apache2')
-   serviceStart('gerrit')
-   serviceStart('jobqueue.pl')
+   print "\nRestarting system..."
+   systemRestart()
 
    print "\n"
 
