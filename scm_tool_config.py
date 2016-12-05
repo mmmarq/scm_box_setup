@@ -14,9 +14,6 @@ SMTPUSER = ""
 SMTPPORT = "25"
 SMTPPASSWD = ""
 
-def replace_its_bugzilla():
-   subprocess.call(['cp','-f','its-bugzilla.jar','/my_services/gerrit/plugins/its-bugzilla.jar'])
-
 def get_ip_address(ifname):
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
    return socket.inet_ntoa(fcntl.ioctl(
@@ -32,8 +29,8 @@ def fileSetup():
    global SMTPPORT
    global SMTPPASSWD
 
-   SOURCEFILELIST = ['gerrit.config','gerrit_index.php','params.json','secure.config']
-   TARGETFILELIST = ['/my_services/gerrit/etc/gerrit.config','/var/www/html/gerrit/index.php','/my_services/bugzilla/data/params.json','/my_services/gerrit/etc/secure.config']
+   SOURCEFILELIST = ['gerrit.config','gerrit_index.php','secure.config','jenkins_index.php','config_inc.php']
+   TARGETFILELIST = ['/my_services/gerrit/etc/gerrit.config','/var/www/html/gerrit/index.php','/my_services/gerrit/etc/secure.config','/var/www/html/jenkins/index.php','/my_services/mantisbt/config/config_inc.php']
    CHANGEDFILELIST = []
 
    # Check if template files are available
@@ -49,7 +46,7 @@ def fileSetup():
          os.exit(99)
 
    # Read template files and replace info provided by user
-   for position in [0,1,2,3]:
+   for position in range(0,len(SOURCEFILELIST)):
       temp = ""
       with open(SOURCEFILELIST[position],'r') as f:
          temp = f.read()
@@ -61,14 +58,16 @@ def fileSetup():
       if SMTPSERVER == '':
          temp = temp.replace('SMTPENABLE','false')
          temp = temp.replace('SMTPTYPE','None')
+         temp = temp.replace('SMTPONOFF','OFF')
       else:
          temp = temp.replace('SMTPENABLE','true')
          temp = temp.replace('SMTPTYPE','SMTP')
+         temp = temp.replace('SMTPONOFF','ON')
 
       CHANGEDFILELIST.append(temp)
 
    # Replace configuration file content
-   for position in [0,1,2,3]:
+   for position in range(0,len(SOURCEFILELIST)):
       temp = ""
       with open(TARGETFILELIST[position],'w') as f:
          f.write(CHANGEDFILELIST[position])
@@ -80,14 +79,6 @@ def serviceStop(name):
    pid = ""
    print "Stopping service: " + name
    subprocess.call(['service', name, 'stop'])
-
-   if name == 'gerrit':
-      if os.path.isfile('/my_services/gerrit/logs/gerrit.pid'):
-         with open('/my_services/gerrit/logs/gerrit.pid','r') as f:
-            pid = f.read().rstrip('\n')
-         if pid != "": subprocess.call(['kill', '-9', pid])
-   elif name == 'apache2':
-      subprocess.call(['killall', '-9', name])
 
 def systemRestart():
    subprocess.call(['shutdown', '-r', 'now'])
@@ -111,7 +102,7 @@ def main():
    if temp != "": NEWIPADRESS = temp
    print "\nAll services will be available under IP: " + NEWIPADRESS + "\n"
 
-   print "IMPORTANT - Leave next questions blank if you want to disable Bugzilla/Gerrit mail notification\n"
+   print "IMPORTANT - Leave next questions blank if you want to disable Mantis/Gerrit mail notification\n"
    # Request to user SMTP server data
    temp = raw_input('Please enter your SMTP (e-mail) server address: ')
    if temp != "": SMTPSERVER = temp
@@ -128,13 +119,10 @@ def main():
    print "\nStopping services..."
    serviceStop('gerrit')
    serviceStop('apache2')
-   serviceStop('jobqueue.pl')
+   serviceStop('jenkins')
 
    print "\nSetting up configuration files..."
    fileSetup()
-
-   print "\nReplacing its-bugzilla plugin..."
-   replace_its_bugzilla()
 
    # Force daemon configuration file reload
    daemonReload()
