@@ -73,7 +73,7 @@ def fileSetup():
          f.write(CHANGEDFILELIST[position])
 
 def updateDefaultPage():
-   subprocess.call(['cp','-f','apache_index.php','/var/www/html/index.php'])
+   subprocess.call(['unzip','default_page.zip','-d','/var/www/html/'])
    
 def serviceStop(name):
    pid = ""
