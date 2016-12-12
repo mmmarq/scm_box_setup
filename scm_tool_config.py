@@ -29,8 +29,8 @@ def fileSetup():
    global SMTPPORT
    global SMTPPASSWD
 
-   SOURCEFILELIST = ['gerrit.config','gerrit_index.php','secure.config','jenkins_index.php','config_inc.php']
-   TARGETFILELIST = ['/my_services/gerrit/etc/gerrit.config','/var/www/html/gerrit/index.php','/my_services/gerrit/etc/secure.config','/var/www/html/jenkins/index.php','/my_services/mantisbt/config/config_inc.php']
+   SOURCEFILELIST = ['gerrit.config','secure.config','config_inc.php']
+   TARGETFILELIST = ['/my_services/gerrit/etc/gerrit.config','/my_services/gerrit/etc/secure.config','/my_services/mantisbt/config/config_inc.php']
    CHANGEDFILELIST = []
 
    # Check if template files are available
@@ -102,19 +102,20 @@ def main():
    if temp != "": NEWIPADRESS = temp
    print "\nAll services will be available under IP: " + NEWIPADRESS + "\n"
 
-   print "IMPORTANT - Leave next questions blank if you want to disable Mantis/Gerrit mail notification\n"
+   print "IMPORTANT - Leave next question blank if you want to disable Mantis/Gerrit mail notification\n"
    # Request to user SMTP server data
    temp = raw_input('Please enter your SMTP (e-mail) server address: ')
-   if temp != "": SMTPSERVER = temp
+   if temp != "":
+      SMTPSERVER = temp
 
-   temp = raw_input('Please enter your SMTP (e-mail) server port number (leave blank for default 25): ')
-   if temp != "": SMTPPORT = temp
+      temp = raw_input('Please enter your SMTP (e-mail) server port number (leave blank for default 25): ')
+      if temp != "": SMTPPORT = temp
 
-   temp = raw_input('Please enter your SMTP (e-mail) server username: ')
-   if temp != "": SMTPUSER = temp
+      temp = raw_input('Please enter your SMTP (e-mail) server username: ')
+      if temp != "": SMTPUSER = temp
 
-   temp = getpass.getpass('Please enter your SMTP (e-mail) server password: ')
-   if temp != "": SMTPPASSWD = temp
+      temp = getpass.getpass('Please enter your SMTP (e-mail) server password: ')
+      if temp != "": SMTPPASSWD = temp
 
    print "\nStopping services..."
    serviceStop('gerrit')
