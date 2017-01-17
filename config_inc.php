@@ -2,12 +2,12 @@
 $g_hostname               = 'mysql.raspberry.pi';
 $g_db_type                = 'mysqli';
 $g_database_name          = 'bugtracker';
-$g_db_username            = 'root';
-$g_db_password            = 'raspberry';
+$g_db_username            = 'bugs';
+$g_db_password            = 'bugless';
 
 $g_default_timezone       = 'UTC';
 
-$g_crypto_master_salt     = 'jqdqRNrJcn7IEzRDcC0moE7OX+JXbv0vztGfsSFqY2Y=';
+$g_crypto_master_salt     = 'hIQ5m/FtwreZ8CQQ8cw9qUgASeIkQ3aM8EoPYeFUdp0=';
 $g_cookie_path            	= '/mantisbt/';
 
 
