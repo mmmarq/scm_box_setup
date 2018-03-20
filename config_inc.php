@@ -7,7 +7,7 @@ $g_db_password            = 'bugless';
 
 $g_default_timezone       = 'UTC';
 
-$g_crypto_master_salt     = 'hIQ5m/FtwreZ8CQQ8cw9qUgASeIkQ3aM8EoPYeFUdp0=';
+$g_crypto_master_salt     = 'sb789XeAhPoO3grwR1r9o24uS9S4mlkILTcGJ7hb7W8=';
 $g_cookie_path            	= '/mantisbt/';
 
 
