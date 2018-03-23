@@ -74,7 +74,10 @@ def fileSetup():
 
 def updateDefaultPage():
    subprocess.call(['unzip','-oq','default_page.zip','-d','/var/www/html/'])
-   
+
+def updateGerritHooks():
+   subprocess.call(['sudo','-u','gerrit','git','--work-tree=/my_services/gerrit/hooks','--git-dir=/my_services/gerrit/hooks/.git','pull','-q'])
+
 def serviceStop(name):
    pid = ""
    print "Stopping service: " + name
@@ -127,9 +130,12 @@ def main():
 
    # Force daemon configuration file reload
    daemonReload()
-   
+
    # Update apache default home page
    updateDefaultPage()
+
+   # Update gerrit hooks
+   updateGerritHooks()
 
    print "\nRestarting system..."
    systemRestart()
